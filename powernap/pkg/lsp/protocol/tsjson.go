@@ -234,10 +234,14 @@ func (t Or_Declaration) MarshalJSON() ([]byte, error) {
 		return json.Marshal(x)
 	case []Location:
 		return json.Marshal(x)
+	case LocationLink:
+		return json.Marshal(x)
+	case []LocationLink:
+		return json.Marshal(x)
 	case nil:
 		return []byte("null"), nil
 	}
-	return nil, fmt.Errorf("type %T not one of [Location []Location]", t)
+	return nil, fmt.Errorf("type %T not one of [Location []Location LocationLink []LocationLink]", t)
 }
 
 func (t *Or_Declaration) UnmarshalJSON(x []byte) error {
@@ -259,7 +263,21 @@ func (t *Or_Declaration) UnmarshalJSON(x []byte) error {
 		t.Value = h238
 		return nil
 	}
-	return &UnmarshalError{"unmarshal failed to match one of [Location []Location]"}
+	decoder237b := json.NewDecoder(bytes.NewReader(x))
+	decoder237b.DisallowUnknownFields()
+	var h237b LocationLink
+	if err := decoder237b.Decode(&h237b); err == nil {
+		t.Value = h237b
+		return nil
+	}
+	decoder238b := json.NewDecoder(bytes.NewReader(x))
+	decoder238b.DisallowUnknownFields()
+	var h238b []LocationLink
+	if err := decoder238b.Decode(&h238b); err == nil {
+		t.Value = h238b
+		return nil
+	}
+	return &UnmarshalError{"unmarshal failed to match one of [Location []Location LocationLink []LocationLink]"}
 }
 
 func (t Or_Definition) MarshalJSON() ([]byte, error) {
@@ -268,10 +286,14 @@ func (t Or_Definition) MarshalJSON() ([]byte, error) {
 		return json.Marshal(x)
 	case []Location:
 		return json.Marshal(x)
+	case LocationLink:
+		return json.Marshal(x)
+	case []LocationLink:
+		return json.Marshal(x)
 	case nil:
 		return []byte("null"), nil
 	}
-	return nil, fmt.Errorf("type %T not one of [Location []Location]", t)
+	return nil, fmt.Errorf("type %T not one of [Location []Location LocationLink []LocationLink]", t)
 }
 
 func (t *Or_Definition) UnmarshalJSON(x []byte) error {
@@ -293,7 +315,21 @@ func (t *Or_Definition) UnmarshalJSON(x []byte) error {
 		t.Value = h225
 		return nil
 	}
-	return &UnmarshalError{"unmarshal failed to match one of [Location []Location]"}
+	decoder224b := json.NewDecoder(bytes.NewReader(x))
+	decoder224b.DisallowUnknownFields()
+	var h224b LocationLink
+	if err := decoder224b.Decode(&h224b); err == nil {
+		t.Value = h224b
+		return nil
+	}
+	decoder225b := json.NewDecoder(bytes.NewReader(x))
+	decoder225b.DisallowUnknownFields()
+	var h225b []LocationLink
+	if err := decoder225b.Decode(&h225b); err == nil {
+		t.Value = h225b
+		return nil
+	}
+	return &UnmarshalError{"unmarshal failed to match one of [Location []Location LocationLink []LocationLink]"}
 }
 
 func (t Or_Diagnostic_code) MarshalJSON() ([]byte, error) {
