@@ -544,15 +544,22 @@ func (t Or_Hover_contents) MarshalJSON() ([]byte, error) {
 		return json.Marshal(x)
 	case []MarkedString:
 		return json.Marshal(x)
+	case string:
+		return json.Marshal(x)
 	case nil:
 		return []byte("null"), nil
 	}
-	return nil, fmt.Errorf("type %T not one of [MarkedString MarkupContent []MarkedString]", t)
+	return nil, fmt.Errorf("type %T not one of [MarkedString MarkupContent []MarkedString string]", t)
 }
 
 func (t *Or_Hover_contents) UnmarshalJSON(x []byte) error {
 	if string(x) == "null" {
 		t.Value = nil
+		return nil
+	}
+	var strVal string
+	if err := json.Unmarshal(x, &strVal); err == nil {
+		t.Value = strVal
 		return nil
 	}
 	decoder34 := json.NewDecoder(bytes.NewReader(x))
@@ -576,7 +583,7 @@ func (t *Or_Hover_contents) UnmarshalJSON(x []byte) error {
 		t.Value = h36
 		return nil
 	}
-	return &UnmarshalError{"unmarshal failed to match one of [MarkedString MarkupContent []MarkedString]"}
+	return &UnmarshalError{"unmarshal failed to match one of [MarkedString MarkupContent []MarkedString string]"}
 }
 
 func (t Or_InlayHintLabelPart_tooltip) MarshalJSON() ([]byte, error) {
